@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Detect Deepfake Image</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+
+body{
+font-family: Arial;
+background: linear-gradient(135deg,#1e3c72,#2a5298);
+color:white;
+text-align:center;
+margin:0;
+}
+
+.container{
+width:450px;
+margin:80px auto;
+background:white;
+color:black;
+padding:30px;
+border-radius:10px;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+h1{
+margin-bottom:20px;
+}
+
+.upload-box{
+border:2px dashed #ccc;
+padding:30px;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+input[type="file"]{
+margin-top:10px;
+}
+
+button{
+margin-top:20px;
+padding:12px 30px;
+background:#007bff;
+color:white;
+border:none;
+border-radius:5px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#0056b3;
+}
+
+.preview{
+margin-top:20px;
+}
+
+.preview img{
+max-width:250px;
+border-radius:8px;
+}
+
+</style>
+
+<script>
+
+function previewImage(event){
+
+const reader = new FileReader();
+
+reader.onload = function(){
+const output = document.getElementById("preview-img");
+output.src = reader.result;
+}
+
+reader.readAsDataURL(event.target.files[0]);
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+{% include "navbar.html" %}
+
+<div class="container">
+
+<h1>Upload Image for Deepfake Detection</h1>
+
+<form action="/detect_image" method="POST" enctype="multipart/form-data">
+
+<div class="upload-box">
+
+<p>Select an image</p>
+
+<input type="file" name="image" onchange="previewImage(event)" required>
+
+</div>
+
+<div class="preview">
+<img id="preview-img">
+</div>
+
+<button type="submit">Detect Image</button>
+
+</form>
+
+</div>
+
+</body>
+
+</html>

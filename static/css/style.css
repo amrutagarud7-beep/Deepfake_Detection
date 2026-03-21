@@ -1,0 +1,76 @@
+/* DARK BACKGROUND */
+.login-body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial;
+    background: linear-gradient(135deg, #05080f, #0f2027, #1c2b36);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CANVAS */
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* LOGIN BOX */
+.login-box {
+    position: relative;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 15px;
+    width: 300px;
+    text-align: center;
+    color: white;
+}
+
+/* LOGO */
+.logo {
+    width: 70px;
+    margin-bottom: 10px;
+    animation: float 3s infinite;
+    filter: drop-shadow(0 0 10px #00ffd5); /* 🔥 glow */
+}
+@keyframes float {
+    0% {transform: translateY(0);}
+    50% {transform: translateY(-8px);}
+    100% {transform: translateY(0);}
+}
+
+/* TITLE */
+.title span {
+    background: linear-gradient(90deg, #00ffd5, #00aaff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* INPUT */
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+}
+
+/* BUTTON */
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(45deg, #00ffd5, #0099ff);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+/* LINKS */
+.login-box a {
+    color: #00ffd5;
+    font-size: 13px;
+}

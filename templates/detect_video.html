@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Detect Deepfake Video</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+
+body{
+font-family: Arial;
+background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+text-align:center;
+margin:0;
+}
+
+.container{
+width:500px;
+margin:80px auto;
+background:white;
+color:black;
+padding:30px;
+border-radius:10px;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+h1{
+margin-bottom:20px;
+}
+
+.upload-box{
+border:2px dashed #ccc;
+padding:30px;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+input[type="file"]{
+margin-top:10px;
+}
+
+button{
+margin-top:20px;
+padding:12px 30px;
+background:#28a745;
+color:white;
+border:none;
+border-radius:5px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1e7e34;
+}
+
+.preview{
+margin-top:20px;
+}
+
+video{
+max-width:100%;
+border-radius:8px;
+margin-top:10px;
+}
+
+.result{
+margin-top:20px;
+font-size:18px;
+font-weight:bold;
+}
+
+</style>
+
+<script>
+
+function previewVideo(event){
+
+const video = document.getElementById("preview-video");
+
+video.src = URL.createObjectURL(event.target.files[0]);
+
+video.load();
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+{% include "navbar.html" %}
+
+<div class="container">
+
+<h1>Upload Video for Deepfake Detection</h1>
+
+<form action="/detect_video" method="POST" enctype="multipart/form-data">
+
+<div class="upload-box">
+
+<p>Select a video file</p>
+
+<input type="file" name="video" accept="video/*" onchange="previewVideo(event)" required>
+
+</div>
+
+<div class="preview">
+
+<video id="preview-video" controls></video>
+
+</div>
+
+<button type="submit">Detect Video</button>
+
+</form>
+
+{% if result %}
+
+<div class="result">
+
+Prediction: {{ result }}
+
+<br><br>
+
+Fake: {{ fake }} %
+
+<br>
+
+Real: {{ real }} %
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+
+</html>

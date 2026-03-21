@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>AI Detection Dashboard</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+
+body{
+font-family: Arial;
+background:#f0f2f5;
+text-align:center;
+}
+
+.dashboard-container{
+width:80%;
+margin:auto;
+margin-top:40px;
+}
+
+.card-container{
+display:flex;
+justify-content:space-around;
+margin-top:30px;
+}
+
+.card{
+background:white;
+padding:20px;
+width:200px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.total{
+background:#007bff;
+color:white;
+}
+
+.fake{
+background:#ff4d4d;
+color:white;
+}
+
+.real{
+background:#28a745;
+color:white;
+}
+
+.chart-box{
+background:white;
+margin-top:40px;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.progress-bar{
+width:100%;
+background:#ddd;
+border-radius:20px;
+margin:20px 0;
+overflow:hidden;
+}
+
+.progress{
+color:white;
+padding:10px;
+}
+
+.fake-bar{
+background:#ff4d4d;
+}
+
+.real-bar{
+background:#28a745;
+}
+
+</style>
+
+</head>
+
+<body>
+
+{% include "navbar.html" %}
+
+<div class="dashboard-container">
+
+<h1>AI Detection Dashboard</h1>
+
+<div class="card-container">
+
+<div class="card total">
+<h2>Total Scans</h2>
+<p>{{ total }}</p>
+</div>
+
+<div class="card fake">
+<h2>Fake Detected</h2>
+<p>{{ fake }}</p>
+</div>
+
+<div class="card real">
+<h2>Real Detected</h2>
+<p>{{ real }}</p>
+</div>
+
+</div>
+
+<div class="chart-box">
+
+<h2>Detection Analysis</h2>
+
+<div class="progress-bar">
+<div class="progress fake-bar" style="width: {{ fake }}%">
+Fake {{ fake }}%
+</div>
+</div>
+
+<div class="progress-bar">
+<div class="progress real-bar" style="width: {{ real }}%">
+Real {{ real }}%
+</div>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

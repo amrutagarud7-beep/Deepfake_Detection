@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Detection History</title>
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="history-body">
+
+<h1>Detection History</h1>
+
+<table class="history-table">
+
+<tr>
+<th>ID</th>
+<th>Preview</th>
+<th>File</th>
+<th>Result</th>
+<th>Fake %</th>
+<th>Real %</th>
+</tr>
+
+{% for row in data %}
+
+<tr>
+
+<td>{{row[0]}}</td>
+
+<td>
+{% if row[2] == "Image" %}
+<img src="/static/uploads/{{row[1]}}" width="70">
+{% else %}
+<video width="80" controls>
+<source src="/static/uploads/{{row[1]}}">
+</video>
+{% endif %}
+</td>
+
+<td>{{row[1]}}</td>
+
+<td class="{{row[3]|lower}}">
+{{row[3]}}
+</td>
+
+<td>
+<div class="bar red">
+<div style="width:{{row[4]}}%"></div>
+</div>
+{{row[4]}}%
+</td>
+
+<td>
+<div class="bar green">
+<div style="width:{{row[5]}}%"></div>
+</div>
+{{row[5]}}%
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>
