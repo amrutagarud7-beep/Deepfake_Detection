@@ -1,0 +1,65 @@
+/* Import font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+/* Navbar Container */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 5%;
+    background: rgba(15, 23, 42, 0.7); /* darker glass */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    
+    position: fixed;   /* 🔥 FIX: Always stay at top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Logo */
+.logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.logo span {
+    color: #38bdf8;
+}
+
+/* Links */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+}
+
+.nav-links li a:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Logout button */
+.logout-btn {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+    .nav-links {
+        gap: 0.5rem;
+    }
+}
