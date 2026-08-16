@@ -2,15 +2,213 @@
 <html>
 <head>
 <title>Detection History</title>
-<link rel="stylesheet" href="/static/css/style.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI', sans-serif;
+}
+
+/* 🌈 BACKGROUND (BLUE → LIGHT BLUE → WHITE) */
+body{
+background: linear-gradient(135deg, #1e3a8a, #60a5fa, #f8fafc);
+min-height:100vh;
+color:#3e2c1c; /* 🟤 DARK BROWN TEXT */
+}
+
+/* 🔵 NAVBAR SPACE */
+.navbar-space{
+height:70px;
+background:#0f172a;
+}
+
+/* HEADER */
+.header{
+text-align:center;
+margin:25px 0;
+}
+
+.header h1{
+font-size:36px;
+color:#ffffff;
+}
+
+/* CONTROLS */
+.controls{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-bottom:30px;
+}
+
+.controls input,
+.controls select{
+padding:12px 18px;
+border-radius:25px;
+border:none;
+background:white;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+font-size:14px;
+}
+
+/* TABLE */
+.history-table{
+width:94%;
+margin:auto;
+border-spacing:0 20px;
+}
+
+/* HEADER */
+.history-table th{
+font-size:16px;
+font-weight:700;
+color:#1e3a8a;
+}
+
+/* ROW (WHITE CARD STYLE) */
+.history-table tr{
+background:white;
+border-radius:16px;
+box-shadow:0 8px 25px rgba(0,0,0,0.12);
+transition:0.3s;
+cursor:pointer;
+}
+
+/* HOVER (LIGHT BLUE EFFECT) */
+.history-table tr:hover{
+transform:translateY(-5px);
+background:#e0f2fe;
+}
+
+/* CLICK EFFECT */
+.history-table tr:active{
+background:#bfdbfe;
+transform:scale(0.98);
+}
+
+/* CELL */
+.history-table td{
+padding:22px;
+font-size:16px;
+font-weight:600;
+text-align:center;
+color:#3e2c1c; /* 🟤 TEXT */
+}
+
+/* ID */
+.history-table td:first-child{
+font-size:18px;
+font-weight:700;
+color:#2563eb; /* 🔵 */
+}
+
+/* PREVIEW */
+.preview-box{
+background:#e0f2fe; /* 💠 LIGHT BLUE */
+padding:10px;
+border-radius:12px;
+}
+
+.preview-box img,
+.preview-box video{
+width:95px;
+border-radius:10px;
+}
+
+/* FILE */
+.history-table td:nth-child(3){
+font-size:15px;
+}
+
+/* RESULT BADGE */
+.result{
+padding:8px 16px;
+border-radius:20px;
+font-size:13px;
+font-weight:bold;
+}
+
+/* 🟢 REAL */
+.real-badge{
+background:#dcfce7;
+color:#15803d;
+}
+
+/* 🔴 FAKE */
+.fake-badge{
+background:#fee2e2;
+color:#b91c1c;
+}
+
+/* PROGRESS */
+.bar{
+width:140px;
+height:10px;
+background:#e5e7eb;
+border-radius:20px;
+overflow:hidden;
+margin:8px auto;
+}
+
+.bar div{
+height:100%;
+}
+
+/* COLORS */
+.red div{ background:#ef4444;}
+.green div{ background:#22c55e;}
+
+/* BUTTON */
+.delete-btn{
+background:#ef4444;
+border:none;
+padding:10px 16px;
+border-radius:20px;
+font-size:13px;
+color:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+.delete-btn:hover{
+background:#b91c1c;
+transform:scale(1.05);
+}
+
+</style>
+
 </head>
 
-<body class="history-body">
+<body>
 
+<<<<<<< Updated upstream
 <div class="history-container">
+=======
+{% include "navbar.html" %}
+
+<div class="navbar-space"></div>
+
+<div class="header">
+<h1>📂 Detection History</h1>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+<input type="text" id="search" placeholder="Search file...">
+<select id="filter">
+<option value="all">All</option>
+<option value="real">Real</option>
+<option value="fake">Fake</option>
+</select>
+</div>
+>>>>>>> Stashed changes
 
     <h1 class="history-title">Detection History</h1>
 
+<<<<<<< Updated upstream
     <table class="history-table">
 
         <tr>
@@ -36,9 +234,38 @@
                 </video>
                 {% endif %}
             </td>
+=======
+<tr>
+<th>ID</th>
+<th>Preview</th>
+<th>File</th>
+<th>Result</th>
+<th>Fake %</th>
+<th>Real %</th>
+<th>Action</th>
+</tr>
+
+{% for row in data %}
+<tr class="row" data-type="{{row[3]|lower}}">
+
+<td>#{{row[0]}}</td>
+
+<td>
+<div class="preview-box">
+{% if row[2] == "Image" %}
+<img src="/static/uploads/{{row[1]}}">
+{% else %}
+<video controls>
+<source src="/static/uploads/{{row[1]}}">
+</video>
+{% endif %}
+</div>
+</td>
+>>>>>>> Stashed changes
 
             <td>{{ row[1] }}</td>
 
+<<<<<<< Updated upstream
             <td class="{{ row[3]|lower }}">
                 {{ row[3] }}
             </td>
@@ -61,8 +288,63 @@
         {% endfor %}
 
     </table>
+=======
+<td>
+<span class="result {{ 'fake-badge' if row[3]=='Fake' else 'real-badge' }}">
+{{row[3]}}
+</span>
+</td>
+>>>>>>> Stashed changes
 
 </div>
+<<<<<<< Updated upstream
+=======
+{{row[4]}}%
+</td>
+
+<td>
+<div class="bar green">
+<div style="width:{{row[5]}}%"></div>
+</div>
+{{row[5]}}%
+</td>
+
+<td>
+<a href="/delete/{{row[0]}}">
+<button class="delete-btn">Delete</button>
+</a>
+</td>
+
+</tr>
+{% endfor %}
+
+</table>
+>>>>>>> Stashed changes
+
+<script>
+
+/* SEARCH */
+document.getElementById("search").addEventListener("keyup", function(){
+let value = this.value.toLowerCase();
+document.querySelectorAll(".row").forEach(row=>{
+let text = row.children[2].innerText.toLowerCase();
+row.style.display = text.includes(value) ? "" : "none";
+});
+});
+
+/* FILTER */
+document.getElementById("filter").addEventListener("change", function(){
+let value = this.value;
+document.querySelectorAll(".row").forEach(row=>{
+if(value==="all"){
+row.style.display="";
+}else{
+row.style.display = row.dataset.type===value ? "" : "none";
+}
+});
+});
+
+</script>
 
 </body>
 </html>

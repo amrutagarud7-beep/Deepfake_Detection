@@ -2,61 +2,168 @@
 <html>
 
 <head>
-<title>Detection Result</title>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<title>AI Detection Dashboard</title>
 
 <style>
 
-.result-container{
-width:500px;
-margin:40px auto;
-text-align:center;
-background:#f5f5f5;
-padding:30px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
+body{
+    font-family: 'Segoe UI', Arial;
+    margin:0;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color:#fff;
+    transition:0.4s;
 }
 
-.result-img{
-margin:20px 0;
-border-radius:10px;
+/* LIGHT MODE */
+body.light-mode{
+    background: #f4f6f9;
+    color:#333;
 }
 
-.bar{
-width:100%;
-background:#ddd;
-border-radius:20px;
-margin:15px 0;
-overflow:hidden;
+/* 🔥 NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+.logo {
+    color: #00e6e6;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    background: #00e6e6;
+    color: black;
+}
+
+/* 🔥 TOGGLE BUTTON INSIDE NAVBAR */
+.toggle-btn{
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.toggle-btn:hover{
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0,198,255,0.7);
+}
+
+/* CONTAINER */
+.dashboard-container{
+    width:85%;
+    margin:auto;
+    margin-top:40px;
+    text-align:center;
+}
+
+/* TITLE */
+h1{
+    margin-bottom:30px;
+}
+
+/* CARD SECTION */
+.card-container{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:25px;
+}
+
+/* CARD */
+.card{
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.1);
+    padding:25px;
+    width:230px;
+    border-radius:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.3);
+    transition:0.3s;
+}
+
+body.light-mode .card{
+    background:white;
+    color:#000;
+}
+
+/* HOVER */
+.card:hover{
+    transform:translateY(-10px);
+}
+
+/* COLORS */
+.total{
+    background: linear-gradient(135deg, #36d1dc, #5b86e5);
 }
 
 .fake{
-background:#ff4d4d;
-color:white;
-padding:8px;
-text-align:center;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
 }
 
 .real{
-background:#28a745;
-color:white;
-padding:8px;
-text-align:center;
+    background: linear-gradient(135deg, #00b09b, #96c93d);
 }
 
-.btn{
-margin-top:20px;
-padding:10px 20px;
-background:#007bff;
-color:white;
-border:none;
-border-radius:5px;
-cursor:pointer;
+/* CHART BOX */
+.chart-box{
+    margin-top:60px;
+    padding:35px;
+    border-radius:20px;
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.1);
 }
 
-.btn:hover{
-background:#0056b3;
+body.light-mode .chart-box{
+    background:white;
+}
+
+/* PROGRESS */
+.progress-bar{
+    width:100%;
+    background:#ddd;
+    border-radius:30px;
+    margin:25px 0;
+    overflow:hidden;
+}
+
+.progress{
+    color:white;
+    padding:14px;
+    font-weight:bold;
+}
+
+/* COLORS */
+.fake-bar{
+    background: linear-gradient(to right, #ff416c, #ff4b2b);
+}
+
+.real-bar{
+    background: linear-gradient(to right, #00b09b, #96c93d);
 }
 
 </style>
@@ -65,39 +172,109 @@ background:#0056b3;
 
 <body>
 
-{% include "navbar.html" %}
+<!-- 🔥 NAVBAR -->
+<div class="navbar">
+    <div class="logo">🤖 DeepFake AI</div>
 
-<div class="result-container">
+    <ul class="nav-links">
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/detect_image">Detect Image</a></li>
+        <li><a href="/detect_video">Detect Video</a></li>
+        <li><a href="/history">History</a></li>
 
-<h1>Detection Result</h1>
+        <!-- 🌙 TOGGLE BUTTON -->
+        <li>
+            <button class="toggle-btn" onclick="toggleMode()">🌙</button>
+        </li>
 
-{% if image %}
-<img class="result-img"
-src="{{ url_for('static', filename='uploads/' + image) }}"
-width="300">
+        <li><a href="/">Logout</a></li>
+    </ul>
+</div>
+
+<!-- CONTENT -->
+<div class="dashboard-container">
+
+<h1>🚀 AI Detection Dashboard</h1>
+
+<div class="card-container">
+
+<div class="card total">
+<h2>Total Scans</h2>
+<p>{{ total }}</p>
+</div>
+
+<div class="card fake">
+<h2>Fake Detected</h2>
+<p>{{ fake }}</p>
+</div>
+
+<div class="card real">
+<h2>Real Detected</h2>
+<p>{{ real }}</p>
+</div>
+
+</div>
+
+<div class="chart-box">
+
+<h2>📊 Detection Analysis</h2>
+
+<!-- 🔥 FINAL RESULT -->
+{% if fake > real and (fake - real) > 10 %}
+<h2 style="color:#ff4b2b;">❌ FAKE DETECTED</h2>
+
+{% elif real > fake and (real - fake) > 10 %}
+<h2 style="color:#00ffae;">✅ REAL DETECTED</h2>
+
+{% else %}
+<h2 style="color:#facc15;">⚠️ UNCERTAIN RESULT</h2>
 {% endif %}
 
-<h2>{{ result }}</h2>
 
-<!-- Fake Percentage -->
-<div class="bar">
-<div class="fake" style="width: {{ fake }}%">
+<div class="progress-bar">
+<div class="progress fake-bar" style="width: {{ fake }}%">
 Fake {{ fake }}%
 </div>
 </div>
 
-<!-- Real Percentage -->
-<div class="bar">
-<div class="real" style="width: {{ real }}%">
+<div class="progress-bar">
+<div class="progress real-bar" style="width: {{ real }}%">
 Real {{ real }}%
 </div>
 </div>
 
-<a href="/detect_image">
-<button class="btn">Detect Another Image</button>
-</a>
+</div>
 
 </div>
+
+<script>
+
+/* 🌙 TOGGLE FUNCTION */
+function toggleMode(){
+    document.body.classList.toggle("light-mode");
+
+    let btn = document.querySelector(".toggle-btn");
+
+    if(document.body.classList.contains("light-mode")){
+        localStorage.setItem("mode","light");
+        btn.innerHTML = "☀️";
+    }else{
+        localStorage.setItem("mode","dark");
+        btn.innerHTML = "🌙";
+    }
+}
+
+/* LOAD SAVED MODE */
+window.onload = function(){
+    let btn = document.querySelector(".toggle-btn");
+
+    if(localStorage.getItem("mode") === "light"){
+        document.body.classList.add("light-mode");
+        btn.innerHTML = "☀️";
+    }
+}
+
+</script>
 
 </body>
 </html>

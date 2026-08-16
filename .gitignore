@@ -1,4 +1,4 @@
-venv311/
+venv/
 __pycache__/
 *.h5
 *.db
@@ -7,3 +7,4 @@ dataset/
 models/
 *.pyc
 static/uploads/
+temp_frame.jpg

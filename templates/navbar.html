@@ -1,8 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+
+/* ===== NAVBAR ===== */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+/* ===== LEFT (LOGO) ===== */
+.left {
+    flex: 1;
+}
+
+.logo {
+    color: #00e6e6;
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00e6e6;
+}
+
+/* ===== CENTER MENU ===== */
+.center {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+.nav-links li {
+    flex-shrink: 0;
+}
+
+/* LINKS */
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 15px;
+    white-space: nowrap;
+}
+
+.nav-links li a:hover {
+    background: #00e6e6;
+    color: black;
+}
+
+/* ===== RIGHT SECTION ===== */
+.right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex: 1;
+}
+
+/* BUTTONS */
+.toggle-btn,
+.logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-btn {
+    height: 32px;
+    padding: 0;
+    background: #00c6ff;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+}
+
+.logout {
+    height: 32px;
+    padding: 0 14px;
+    background-color: red;
+    color: white;
+}
+
+</style>
+
+</head>
+
+<body>
+
 <nav class="navbar">
     <div class="logo">
         <span>DeepFake</span> AI Detector
     </div>
 
+<<<<<<< Updated upstream
     <ul class="nav-links">
         <li><a href="/home">Home</a></li>
         <li><a href="/detect">Detect Image</a></li>
@@ -13,3 +118,38 @@
         <li><a href="/logout" class="logout-btn">Logout</a></li>
     </ul>
 </nav>
+=======
+    <!-- LEFT -->
+    <div class="left">
+        <div class="logo">🤖 DeepFake AI</div>
+    </div>
+
+    <!-- CENTER -->
+    <div class="center">
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('detect_image') }}">Detect Image</a></li>
+            <li><a href="{{ url_for('detect_video') }}">Detect Video</a></li>
+            <li><a href="{{ url_for('history') }}">History</a></li>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="{{ url_for('logout') }}" class="logout">Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+        <button class="toggle-btn" onclick="toggleMode()">🌙</button>
+    </div>
+
+</nav>
+
+<script>
+function toggleMode(){
+    document.body.classList.toggle("light-mode");
+}
+</script>
+
+</body>
+</html>
+>>>>>>> Stashed changes
